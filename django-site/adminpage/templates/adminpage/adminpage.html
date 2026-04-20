@@ -820,6 +820,7 @@
 
 <div id="toast"></div>
 
+{{ resources|json_script:"resource-data" }}
 <script>
   // Initialize resources from localStorage or use empty object
   let allResources = JSON.parse(localStorage.getItem('campusResources')) || [];
