@@ -23,8 +23,7 @@ WORKDIR /app/django-site
 # 7. Collect static files for WhiteNoise to serve
 RUN python manage.py collectstatic --noinput
 
-RUN python manage.py migrate
-
 # 8. Start the server
 # We use the shell form (no brackets) so the $PORT variable from GCP works
-CMD gunicorn --bind 0.0.0.0:$PORT campus_resource.wsgi:application
+# Migrations run at container startup so they have access to the live database
+CMD python manage.py migrate && gunicorn --bind 0.0.0.0:$PORT campus_resource.wsgi:application
