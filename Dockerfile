@@ -1,5 +1,5 @@
 # 1. Use a stable Python version (using slim for smaller image size)
-FROM python:3.14.3-slim
+FROM python:3.12-slim
 
 # 2. Set environment variables to keep Python from buffering logs
 ENV PYTHONDONTWRITEBYTECODE=1
@@ -26,4 +26,4 @@ RUN python manage.py collectstatic --noinput
 # 8. Start the server
 # We use the shell form (no brackets) so the $PORT variable from GCP works
 # Migrations run at container startup so they have access to the live database
-CMD python manage.py migrate && gunicorn --bind 0.0.0.0:$PORT campus_resource.wsgi:application
+CMD python manage.py migrate && exec gunicorn --bind 0.0.0.0:$PORT campus_resource.wsgi:application
